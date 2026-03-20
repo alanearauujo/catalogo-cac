@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estatísticas - Cadê a Chave?</title>
+    <link rel="icon" type="image/png" href="IMAGENS/Design_sem_nome-removebg-preview.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="estatisticas-page">
+    <div id="page-loader">
+    <div class="loader-container">
+        <svg class="progress-ring" width="150" height="150">
+            <circle class="progress-ring__circle"
+             stroke="white"
+              stroke-width= "3" 
+               fill="transparent"
+                r= "65"
+                 cx="75"
+                  cy= "75" />
+        </svg>
+        <img src="IMAGENS/Design_sem_nome-removebg-preview.png"class="chave-loader" alt="Carregando..." style="width: 80px !important;">
+    </div>
+</div>
+
+    <header class="glass-header">
+        <div class="header-content-wrapper">
+            <div class="header-left">
+                <div class="logo-pill">
+                    <img src="IMAGENS/Design_sem_nome-removebg-preview.png" alt="Logo" class="logo-img">
+                    <h1 id="logo-site">Cadê a Chave?</h1>
+                </div>
+            </div>
+           <nav class="header-nav">
+    <button class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="nav-links" id="nav-links">
+        <div class="dropdown">
+            <a href="#" class="nav-item" id="btn-anos-toggle">Anos</a>
+            <div class="dropdown-content" id="lista-anos-dropdown"></div>
+        </div>
+        <a href="sobre.html" class="nav-item">Sobre</a>
+        <a href="estatisticas.html" class="nav-item">Estatísticas</a>
+        <button id="btn-capsula" onclick="capsulaDoTempo()" title="Cápsula do Tempo">⏳</button>
+    </div>
+</nav>
+
+            <div class="header-right">
+                <input type="text" placeholder="Buscar..." class="search-bar" onfocus="window.location.href='index.html'">
+            </div>
+        </div>
+    </header>
+
+    <main class="content-estatisticas">
+        <div class="stats-hero">
+            <h1 class="gradient-text animation-glow">Seu Desempenho</h1>
+            <p>Acompanhe sua jornada através dos anos e conquistas.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stats-card-large">
+                <h3>Progresso da Coleção</h3>
+                <div class="big-progress-circle">
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path id="progress-circle-fill" class="circle" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <text x="18" y="20.35" class="percentage" id="porcentagem-texto">0%</text>
+                    </svg>
+                </div>
+                <p id="detalhe-vistos">Você assistiu 0 de 0 vídeos disponíveis.</p>
+            </div>
+
+            <div class="stats-card">
+                <h3>Suas Medalhas</h3>
+                <div id="lista-medalhas-completa" class="medal-display">
+                    </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+   <script>
+    async function carregarEstatisticas() {
+        if (typeof inicializarSite === 'function') {
+            await inicializarSite();
+        }
+
+        const checkData = setInterval(() => {
+            if (window.todosOsVideosGlobal && window.todosOsVideosGlobal.length > 0) {
+                clearInterval(checkData);
+                
+                const vistos = JSON.parse(localStorage.getItem("videosVistos")) || [];
+                const total = window.todosOsVideosGlobal.length;
+                const porc = Math.round((vistos.length / total) * 100) || 0;
+                
+                const circle = document.getElementById('progress-circle-fill');
+                if (circle) circle.setAttribute('stroke-dasharray', `${porc}, 100`);
+                
+                document.getElementById('porcentagem-texto').textContent = porc + "%";
+                document.getElementById('detalhe-vistos').textContent = `Você assistiu ${vistos.length} de ${total} vídeos.`;
+                
+                if (typeof window.verificarConquistas === "function") {
+                    window.verificarConquistas(vistos.length);
+                }
+            }
+        }, 100);
+    }
+
+    document.addEventListener('DOMContentLoaded', carregarEstatisticas);
+</script>
+
+</body>
+</html>

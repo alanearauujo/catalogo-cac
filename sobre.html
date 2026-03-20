@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre - Cadê a Chave?</title>
+    <link rel="icon" type="image/png" href="IMAGENS/Design_sem_nome-removebg-preview.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="sobre-page"></body>
+    <div id="page-loader">
+    <div class="loader-container">
+        <svg class="progress-ring" width="150" height="150">
+            <circle class="progress-ring__circle"
+             stroke="white"
+              stroke-width= "3" 
+               fill="transparent"
+                r= "65"
+                 cx="75"
+                  cy= "75" />
+        </svg>
+        <img src="IMAGENS/Design_sem_nome-removebg-preview.png"class="chave-loader" alt="Carregando..." style="width: 80px !important;">
+    </div>
+</div>
+
+    <div class="video-background">
+    <div class="overlay"></div>
+    <video autoplay muted loop playsinline>
+         <source src="VIDEOS/691c1505a7efe7ec7820c9ac173e6ba3_1.mp4"type="video/mp4">
+    </video>
+    </div>
+
+    <header class="glass-header">
+        <div class="header-content-wrapper">
+            <div class="header-left">
+                <div class="logo-pill">
+                    <img src="IMAGENS/Design_sem_nome-removebg-preview.png" alt="Logo" class="logo-img">
+                    <h1 id="logo-site">Cadê a Chave?</h1>
+                </div>
+            </div>
+
+            <nav class="header-nav">
+    <button class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="nav-links" id="nav-links">
+        <div class="dropdown">
+            <a href="#" class="nav-item" id="btn-anos-toggle">Anos</a>
+            <div class="dropdown-content" id="lista-anos-dropdown"></div>
+        </div>
+        <a href="sobre.html" class="nav-item">Sobre</a>
+        <a href="estatisticas.html" class="nav-item">Estatísticas</a>
+        <button id="btn-capsula" onclick="capsulaDoTempo()" title="Cápsula do Tempo">⏳</button>
+    </div>
+</nav>
+
+            
+        </div>
+    </header>
+
+    <main class="content-sobre">
+        <div class="sobre-container">
+            
+            <div class="sobre-hero">
+                <h1 class="gradient-text animation-glow">Sobre o Catálogo</h1>
+                <p>A história de mais de 10 anos do canal organizada para você, fãnzinho.</p>
+            </div>
+
+            <div class="sobre-grid">
+                
+                <div class="sobre-card main-info">
+                    <h3>O Projeto</h3>
+                    <p>
+                Sabe aquele vídeo antigo que te marcou ou aquele quadro que você adora rever? 
+                Este cantinho foi criado com todo carinho para ser o seu <strong>guia pessoal</strong> 
+                pela história do canal. Mais do que um catálogo, é um convite para você mergulhar 
+                em mais de uma década de memórias e encontrar, num clique, o seu momento favorito 
+                com o <strong>Cadê a Chave?</strong>.
+                </p>
+                    <p>Aqui você pode redescobrir momentos felizes, se divertir com o <strong>humornilce</strong> e muito mais.</p>
+                </div>
+
+                <div class="sobre-card stats-info">
+                    <h3>O que você encontra aqui:</h3>
+                    <ul class="lista-funcionalidades">
+                        <li>
+                            <span class="icon-box">🚀</span>
+                            <div class="info-content">
+                                <strong>Modo Maratona</strong>
+                                <p>Sorteio de vídeos que você ainda não viu.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon-box">⏳</span>
+                            <div class="info-content">
+                                <strong>Cápsula do Tempo</strong>
+                                <p>Vídeos postados no mesmo dia em anos anteriores.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon-box">🏆</span>
+                            <div class="info-content">
+                                <strong>Conquistas</strong>
+                                <p>Medalhas exclusivas conforme você assiste.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            
+            <div class="sobre-footer">
+                <p>Desenvolvido para fãs, por fãs. 💚</p>
+            </div>
+
+        </div>
+ <script src="script.js"></script> 
+</body>
+</html>

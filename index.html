@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - Cadê a Chave?</title>
+    <link rel="icon" type="image/png" href="IMAGENS/Design_sem_nome-removebg-preview.png">
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+  <div id="page-loader">
+    <div class="loader-container">
+        <svg class="progress-ring" width="150" height="150">
+            <circle class="progress-ring__circle"
+             stroke="white"
+              stroke-width= "3" 
+               fill="transparent"
+                r= "65"
+                 cx="75"
+                  cy= "75" />
+        </svg>
+        <img src="IMAGENS/Design_sem_nome-removebg-preview.png"class="chave-loader" alt="Carregando..." style="width: 80px !important;">
+    </div>
+</div>
+
+    <header class="glass-header">
+        <div class="header-content-wrapper">
+            <div class="header-left">
+                <div class="logo-pill">
+                    <img src="IMAGENS/Design_sem_nome-removebg-preview.png" alt="Logo" class="logo-img">
+                    <h1 id="logo-site">Cadê a Chave?</h1>
+                </div>
+            </div>
+
+           <nav class="header-nav">
+    <button class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="nav-links" id="nav-links">
+        <div class="dropdown">
+            <a href="#" class="nav-item" id="btn-anos-toggle">Anos</a>
+            <div class="dropdown-content" id="lista-anos-dropdown"></div>
+        </div>
+        <a href="sobre.html" class="nav-item">Sobre</a>
+        <a href="estatisticas.html" class="nav-item">Estatísticas</a>
+        <button id="btn-capsula" onclick="capsulaDoTempo()" title="Cápsula do Tempo">⏳</button>
+    </div>
+</nav>
+            <div class="header-right">
+                <input type="text" id="barra-pesquisa" placeholder="Buscar..." class="search-bar">
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            
+            <div class="stats-highlight">
+                <h2 class="stats-title">Seu Progresso</h2>
+                <div class="progress-container">
+                    <div id="barra-progresso"></div>
+                </div>
+                <p id="texto-contador">0 / 0 vídeos assistidos</p>
+                
+                <div class="stats-container" style="margin-top: 15px;">
+                    <h2 style="font-size: 13px; color: #029684; text-transform: uppercase; margin-bottom: 8px;">Suas Conquistas:</h2>
+                    <div id="badges-container"></div> 
+                </div>
+            </div>
+
+            <h2 class="mt-20">Quadros</h2>
+            <nav id="container-quadros">
+                <a href="#" class="btn-quadro" data-quadro="Experimentando">Experimentando</a>
+                <a href="#" class="btn-quadro" data-quadro="Talento Supremo">Talento Supremo</a>
+                <a href="#" class="btn-quadro" data-quadro="Cadecast">Cadecast</a>
+                <a href="#" class="btn-quadro" data-quadro="Estou com Sorte">Estou com Sorte</a>
+                <a href="#" class="btn-quadro" data-quadro="Quem sabe mais">Quem sabe mais?</a>
+                
+                <a href="#" class="btn-quadro quadro-extra" data-quadro="Nem te conto">Nem te conto</a>
+                <a href="#" class="btn-quadro quadro-extra" data-quadro="Teste supremo">Teste supremo</a>
+                <a href="#" class="btn-quadro quadro-extra" data-quadro="Surra verbal">Surra Verbal</a>
+                <a href="#" class="btn-quadro quadro-extra" data-quadro="#caca">CACA</a>
+                <a href="#" class="btn-quadro quadro-extra" data-quadro="Perguntas">Perguntas & respostas</a>
+                <a href="#" class="btn-quadro quadro-extra" data-quadro="Mistureba">Mistureba</a>
+                <a href="#" class="btn-quadro quadro-extra" data-quadro="Jogo do Divórcio">Jogo do Divórcio</a>
+                <a href="#" class="btn-quadro quadro-extra" data-quadro="Atlanta">Cadê a Mala? (Atlanta)</a>
+                <a href="#" class="btn-quadro quadro-extra" data-quadro="polonia">Cadê a Mala? (Pôlonia)</a>
+                <a href="#" class="btn-quadro quadro-extra" data-quadro="Taiwan">Taiwan</a>
+                <a href="#" class="btn-quadro quadro-extra" data-quadro="grecia/turquia">Grécia e Turquia</a>
+                <a href="#" class="btn-quadro quadro-extra" data-quadro="vportugal">Portugal</a>
+                <a href="#" class="btn-quadro quadro-extra" data-quadro="japao">Japão</a>
+                <a href="#" class="btn-quadro quadro-extra" data-quadro="Coreia">Coreia do Sul</a>
+            </nav>
+            
+           <button id="btn-mostrar-mais" class="btn-toggle-quadros" onclick="toggleQuadros()">
+             <span id="icone-seta">▼</span> <span id="texto-botao">Mostrar mais</span>
+             </button>
+
+
+            <button id="btn-maratona" onclick="modoMaratona()">
+                🚀 MODO MARATONA
+            </button>
+        </aside>
+
+        <main class="content">
+            <h1 id="titulo-pagina">Carregando vídeos...</h1>
+            <div class="video-grid" id="minha-grade"></div>
+        </main>
+    </div> 
+
+    <div id="modal-maratona-aviso" class="modal">
+        <div class="modal-content-maratona">
+            <div class="maratona-header">🍿 MODO MARATONA</div>
+            <div class="maratona-body">
+                <p>
+                Vou escolher um vídeo que você ainda não marcou como visto.
+                
+                </p>
+                <p class="pergunta">Podemos começar?</p>
+            </div>
+            <div class="maratona-footer">
+                <button class="btn-cancelar" onclick="fecharAvisoMaratona()">CANCELAR</button>
+                <button class="btn-comecar" onclick="iniciarSorteioMaratona()">VAMOS LÁ!</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-player" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <iframe id="video-iframe" src="" frameborder="0" allowfullscreen></iframe>
+            <div class="controles-modal">
+                <button id="btn-visto-modal" class="btn-maratona-visto">
+                    ✅ Marcar como visto e somar no Progresso
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="confetti-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></div>
+
+    <script src="script.js"></script> 
+</body>
+</html>
