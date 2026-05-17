@@ -2,10 +2,10 @@ var todosOsVideosGlobal = [];
 let debounceTimer;
 
 const gradeDeVideos = document.getElementById("minha-grade");
-const tituloPagina = document.getElementById("titulo-pagina\");
-const barraPesquisa = document.getElementById("barra-pesquisa\");
-const modal = document.getElementById("modal-player\");
-const iframe = document.getElementById("video-iframe\");
+const tituloPagina = document.getElementById("titulo-pagina");
+const barraPesquisa = document.getElementById("barra-pesquisa");
+const modal = document.getElementById("modal-player");
+const iframe = document.getElementById("video-iframe");
 
 async function inicializarSite() {
     const atualizarLoader = (porcentagem) => {
@@ -21,7 +21,7 @@ async function inicializarSite() {
     try {
         atualizarLoader(5); 
         
-        // Chamando a sua nova API segura na Vercel
+        // Chamando a nova API segura na Vercel
         const resposta = await fetch('/api/videos');
         atualizarLoader(30); 
         
@@ -48,7 +48,7 @@ async function inicializarSite() {
                 capsulaDoTempo();
             } else {
                 const ultimoTipo = localStorage.getItem("ultimoFiltroTipo") || "ano";
-                // CORREÇÃO: Fallback padrão alterado para 2026 para carregar os vídeos novos do YouTube
+                // Fallback padrão configurado para 2026 para os vídeos novos do YouTube aparecerem direto
                 const ultimoValor = localStorage.getItem("ultimoFiltroValor") || "2026";
                 const ultimoTitulo = localStorage.getItem("ultimoTituloFiltro") || ultimoValor;
 
@@ -68,25 +68,25 @@ async function inicializarSite() {
 
         atualizarLoader(100);
         setTimeout(() => {
-            const loader = document.getElementById("page-loader\");
-            if (loader) loader.style.display = "none\";
+            const loader = document.getElementById("page-loader");
+            if (loader) loader.style.display = "none";
         }, 300);
 
     } catch (erro) {
         console.error("Erro ao inicializar o catálogo:", erro);
-        // Proteção: Remove o loader mesmo se a API falhar para o site não ficar travado
-        const loader = document.getElementById("page-loader\");
-        if (loader) loader.style.display = "none\";
+        // Proteção: Remove o loader se a API falhar para o site não travar na tela preta
+        const loader = document.getElementById("page-loader");
+        if (loader) loader.style.display = "none";
     }
 }
 
 function normalizarTexto(txt) {
     if (!txt) return "";
-    return txt.toLowerCase().normalize("NFD\").replace(/[\u0300-\u036f]/g, "");
+    return txt.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
 function gerarBotoesDeAno() {
-    const dropdown = document.getElementById("lista-anos-dropdown\");
+    const dropdown = document.getElementById("lista-anos-dropdown");
     if (!dropdown) return;
     dropdown.innerHTML = "";
 
@@ -94,16 +94,16 @@ function gerarBotoesDeAno() {
     const anos = [...new Set(todosOsVideosGlobal.map(v => v.data.substring(0, 4)))].sort((a, b) => b - a);
 
     anos.forEach(ano => {
-        const li = document.createElement("li\");
-        const a = document.createElement("a\");
-        a.href = "#\";
-        a.className = "dropdown-item\";
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = "#";
+        a.className = "dropdown-item";
         a.textContent = ano;
         a.onclick = (e) => {
             e.preventDefault();
-            localStorage.setItem("ultimoFiltroTipo", "ano\");
+            localStorage.setItem("ultimoFiltroTipo", "ano");
             localStorage.setItem("ultimoFiltroValor", ano);
-            localStorage.removeItem("ultimoTituloFiltro\");
+            localStorage.removeItem("ultimoTituloFiltro");
             filtrarPorAno(ano);
             dropdown.classList.remove('show-mobile');
         };
@@ -121,7 +121,7 @@ function configurarFiltrosDeQuadros() {
     document.querySelectorAll('.btn-quadro').forEach(btn => {
         btn.onclick = () => {
             const quadro = btn.getAttribute('data-quadro');
-            localStorage.setItem("ultimoFiltroTipo", "quadro\");
+            localStorage.setItem("ultimoFiltroTipo", "quadro");
             localStorage.setItem("ultimoFiltroValor", quadro);
             localStorage.setItem("ultimoTituloFiltro", btn.innerText);
             
@@ -176,17 +176,17 @@ function carregarAno(videos, titulo) {
     gradeDeVideos.innerHTML = "";
 
     if (videos.length === 0) {
-        gradeDeVideos.innerHTML = "<p class='sem-videos'>Nenhum vídeo encontrado para este filtro.</p>\";
+        gradeDeVideos.innerHTML = "<p class='sem-videos'>Nenhum vídeo encontrado para este filtro.</p>";
         atualizarProgressoLateral();
         return;
     }
 
-    const vistos = JSON.parse(localStorage.getItem("videosVistos\")) || [];
+    const vistos = JSON.parse(localStorage.getItem("videosVistos")) || [];
 
     videos.forEach(v => {
-        const card = document.createElement("div\");
-        card.className = "video-card\";
-        if (vistos.includes(v.id)) card.classList.add("visto\");
+        const card = document.createElement("div");
+        card.className = "video-card";
+        if (vistos.includes(v.id)) card.classList.add("visto");
 
         const ano = v.data.substring(0, 4);
         const mes = v.data.substring(4, 6);
@@ -214,32 +214,32 @@ function carregarAno(videos, titulo) {
 function abrirModal(id) {
     if (!modal || !iframe) return;
     iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
-    modal.style.display = "flex\";
+    modal.style.display = "flex";
 
-    const btnVisto = document.getElementById("btn-visto-modal\");
+    const btnVisto = document.getElementById("btn-visto-modal");
     if (btnVisto) {
-        const vistos = JSON.parse(localStorage.getItem("videosVistos\")) || [];
+        const vistos = JSON.parse(localStorage.getItem("videosVistos")) || [];
         if (vistos.includes(id)) {
             btnVisto.textContent = "✓ Vídeo Assistido (Remover)";
-            btnVisto.classList.add("marcado\");
+            btnVisto.classList.add("marcado");
         } else {
             btnVisto.textContent = "✅ Marcar como visto e somar no Progresso";
-            btnVisto.classList.remove("marcado\");
+            btnVisto.classList.remove("marcado");
         }
 
         btnVisto.onclick = () => {
             alternarVisto(id);
             if (vistos.includes(id)) {
                 btnVisto.textContent = "✅ Marcar como visto e somar no Progresso";
-                btnVisto.classList.remove("marcado\");
+                btnVisto.classList.remove("marcado");
             } else {
                 btnVisto.textContent = "✓ Vídeo Assistido (Remover)";
-                btnVisto.classList.add("marcado\");
+                btnVisto.classList.add("marcado");
             }
         };
     }
 
-    const closeBtn = document.querySelector(".close-modal\");
+    const closeBtn = document.querySelector(".close-modal");
     if (closeBtn) {
         closeBtn.onclick = fecharModal;
     }
@@ -250,12 +250,12 @@ function abrirModal(id) {
 
 function fecharModal() {
     if (!modal || !iframe) return;
-    modal.style.display = "none\";
+    modal.style.display = "none";
     iframe.src = "";
 }
 
 function alternarVisto(id) {
-    let vistos = JSON.parse(localStorage.getItem("videosVistos\")) || [];
+    let vistos = JSON.parse(localStorage.getItem("videosVistos")) || [];
     const index = vistos.indexOf(id);
 
     if (index > -1) {
@@ -264,11 +264,11 @@ function alternarVisto(id) {
         vistos.push(id);
     }
 
-    localStorage.setItem("videosVistos\", JSON.stringify(vistos));
+    localStorage.setItem("videosVistos", JSON.stringify(vistos));
 
-    document.querySelectorAll(".video-card\").forEach(card => {
+    document.querySelectorAll(".video-card").forEach(card => {
         if (card.outerHTML.includes(id)) {
-            card.classList.toggle("visto\");
+            card.classList.toggle("visto");
         }
     });
 
@@ -276,21 +276,21 @@ function alternarVisto(id) {
 }
 
 function atualizarProgressoLateral() {
-    const txtProgresso = document.getElementById("txt-progresso\");
-    const fillProgresso = document.getElementById("fill-progresso\");
+    const txtProgresso = document.getElementById("txt-progresso");
+    const fillProgresso = document.getElementById("fill-progresso");
     if (!txtProgresso || !fillProgresso) return;
 
-    const vistos = JSON.parse(localStorage.getItem("videosVistos\")) || [];
+    const vistos = JSON.parse(localStorage.getItem("videosVistos")) || [];
     const total = todosOsVideosGlobal.length;
     const qtdVistos = vistos.filter(id => todosOsVideosGlobal.some(v => v.id === id)).length;
 
     txtProgresso.textContent = `${qtdVistos} / ${total} vídeos assistidos`;
     const porc = total > 0 ? (qtdVistos / total) * 100 : 0;
-    fillProgresso.style.width = `${porc}%\`;
+    fillProgresso.style.width = `${porc}%`;
 }
 
 function iniciarSorteioMaratona() {
-    const vistos = JSON.parse(localStorage.getItem("videosVistos\")) || [];
+    const vistos = JSON.parse(localStorage.getItem("videosVistos")) || [];
     const naoVistos = todosOsVideosGlobal.filter(v => !vistos.includes(v.id));
 
     if (naoVistos.length === 0) {
@@ -305,18 +305,18 @@ function iniciarSorteioMaratona() {
 }
 
 function abrirAvisoMaratona() {
-    const mAviso = document.getElementById("modal-maratona-aviso\");
-    if (mAviso) mAviso.style.display = "flex\";
+    const mAviso = document.getElementById("modal-maratona-aviso");
+    if (mAviso) mAviso.style.display = "flex";
 }
 function fecharAvisoMaratona() {
-    const mAviso = document.getElementById("modal-maratona-aviso\");
-    if (mAviso) mAviso.style.display = "none\";
+    const mAviso = document.getElementById("modal-maratona-aviso");
+    if (mAviso) mAviso.style.display = "none";
 }
 
 function capsulaDoTempo() {
     if (todosOsVideosGlobal.length === 0) {
-        localStorage.setItem("abrirCapsula", "sim\");
-        window.location.href = "index.html\";
+        localStorage.setItem("abrirCapsula", "sim");
+        window.location.href = "index.html";
         return;
     }
 
