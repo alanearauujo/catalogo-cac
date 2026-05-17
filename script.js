@@ -21,9 +21,14 @@ async function inicializarSite() {
     try {
         atualizarLoader(5); 
         
-        const resposta = await fetch('/api/videos');
+        let resposta = await fetch('/api/videos');
         atualizarLoader(30); 
-        
+
+        if (!resposta.ok) {
+            // fallback para ambiente local que não serve rotas /api
+            resposta = await fetch('/videos.json');
+        }
+
         const dadosBrutos = await resposta.json();
         
         if (Array.isArray(dadosBrutos)) {
