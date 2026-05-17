@@ -26,7 +26,7 @@ async function inicializarSite() {
     try {
         atualizarLoader(5); 
         
-        const resposta = await fetch('videos.json');
+        const resposta = await fetch('/api/videos');
         atualizarLoader(30); 
         
         const dadosBrutos = await resposta.json();
