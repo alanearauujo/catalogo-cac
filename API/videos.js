@@ -1,29 +1,29 @@
 // ficheiro: api/videos.js
 
-// Lista com os vídeos antigos do seu JSON para servir de histórico básico
-const HISTORICO_VIDEOS = [
-    { "id": "5k7pk272Lrw", "titulo": "Leon que ama a Nilce que ama... o Jaime?- Ep. 01", "data": "20131221", "tags": "" },
-    { "id": "c4v9oPz4jbA", "titulo": "Uma mulher com furadeira. - Ep.02", "data": "20131222", "tags": "" },
-    { "id": "q4scIucSftQ", "titulo": "Estante de Creeper. - Ep. 03", "data": "20131223", "tags": "" },
-    { "id": "3nRaWyjNs_E", "titulo": "O LEON TEM CHULÉ ?!?! - Ep.04", "data": "20131225", "tags": "perguntas" },
-    { "id": "XzRJ4rW7XKM", "titulo": "PERGUNTAS REVOLTADAS! - Ep. 500", "data": "20150612", "tags": "perguntas" },
-    { "id": "zdev3uKvazE", "titulo": "CHEGAMOS NA POLÔNIA! - Ep. 1200", "data": "20200518", "tags": "polonia" },
-    { "id": "cJBUCa2Cs_4", "titulo": "AVENTURA NA COREIA DO SUL - Ep. 1500", "data": "20230412", "tags": "coreia" },
-    { "id": "fIMX6a1GZXM", "titulo": "PRIMEIRO DIA NO JAPÃO - Ep. 1600", "data": "20240115", "tags": "japao" },
-    { "id": "bZX3OFQEQaY", "titulo": "O Bolo de Fubá Supremo - Ep. 1330", "data": "20210822", "tags": "talento supremo" },
-    { "id": "yKzlitd_G0M", "titulo": "PROVANDO DOCES ESTRANHOS - Ep. 1410", "data": "20220910", "tags": "experimentando" }
-    // Nota: Você pode manter uma cópia reduzida dos anos anteriores aqui para os botões antigos funcionarem!
-];
-
 const DICIONARIO_TAGS = {
-    "XzRJ4rW7XKM": "perguntas",
-    "zdev3uKvazE": "polonia",
-    "cJBUCa2Cs_4": "coreia",
-    "fIMX6a1GZXM": "japao",
-    "bZX3OFQEQaY": "talento supremo",
-    "yKzlitd_G0M": "experimentando",
-    "0RH0x2SCQdQ": "estou com sorte",
-    "dupMgZPwxtI": "estou com sorte"
+    "XzRJ4rW7XKM": "perguntas", "xHPrzTRfpzI": "perguntas",
+    "Vtbo15ArO8A": "atlanta", "lZK6gswH_Ew": "atlanta", "Gc4LC1J5cxo": "atlanta",
+    "zdev3uKvazE": "polonia", "NQsM9ISJpbM": "polonia", "wjucI8ejQSY": "polonia",
+    "3n9fZoFbBqg": "polonia", "nMet2VAsXZ4": "polonia", "0SalIkvyoyY": "polonia",
+    "vn88oRN_1t8": "polonia", "5-f0jPtJZL4": "polonia", "Sh7DnZ_xkx8": "polonia",
+    "1z8Q7i6NHb8": "polonia", "bkoEqVw6Kq0": "talento supremo", "bZX3OFQEQaY": "talento supremo",
+    "yKzlitd_G0M": "experimentando", "6ISSZggbr2g": "experimentando", "4-vBdosW9Ww": "coreia",
+    "4fPeJTEicnw": "coreia", "cJBUCa2Cs_4": "coreia", "rMQyviurUoA": "coreia",
+    "7PFFIUP-f24": "coreia", "EqQ134J62So": "coreia", "W3VzmduBmA4": "coreia",
+    "fIMX6a1GZXM": "japao", "kbQgryzOfDo": "japao", "kko1HDqxrZ0": "japao",
+    "7AzX0V9Xm8k": "japao", "IEnVcpDOk80": "japao", "Pa5FIvOS7rE": "japao",
+    "ub9QxjXH8PE": "japao", "nh6k015yW_o": "japao", "5w4TeaR-Hps": "japao",
+    "6HzFiA1d0QM": "vportugal", "deEPPVmjhdw": "vportugal", "eM0WOPoTDPI": "vportugal",
+    "xm4JgR84sTg": "experimentando", "tl-KtDDEXFo": "experimentando", "bEaFVwgafrQ": "experimentando",
+    "TGB7GM6ZSJM": "experimentando", "oVCkAVlwYk4": "grecia/turquia", "qdAE-eFae4c": "experimentando",
+    "3M6txy-18Ds": "grecia/turquia", "YBXNGvzyjVA": "experimentando", "6aC13XZmssE": "grecia/turquia",
+    "hVLbVxKACF4": "grecia/turquia", "BelNuxNZQQg": "experimentando", "mUfneDlRV08": "grecia/turquia",
+    "iHQBHPBHRhQ": "experimentando", "zUCdWwYIl9c": "taiwan", "zoxlf28ftfs": "taiwan",
+    "SiQ5FM3fIGY": "taiwan", "9l5v_xFzIxY": "experimentando", "4XKrRHtE8lA": "taiwan",
+    "_nrXKsvlgug": "experimentando", "O4NxREZQuXg": "experimentando", "Rh1NUu1fEhU": "experimentando",
+    "vhe5uM7A2rM": "experimentando", "FRFj2KmHZB0": "grecia/turquia", "_2nH1erU7pw": "grecia/turquia",
+    "48ceqFqoH_0": "experimentando", "0RH0x2SCQdQ": "estou com sorte", "_Gvd61CF03k": "experimentando",
+    "mDN0CWYkdvE": "estou com sorte", "TM75qj0RDus": "estou com sorte"
 };
 
 export default async function handler(req, res) {
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     const CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID;
 
     if (!API_KEY || !CHANNEL_ID) {
-        return res.status(500).json({ erro: "Variáveis de ambiente ausentes." });
+        return res.status(500).json({ erro: "Configuração em falta na Vercel" });
     }
 
     const PLAYLIST_ID = CHANNEL_ID.replace('UC', 'UU');
@@ -41,40 +41,30 @@ export default async function handler(req, res) {
         const resposta = await fetch(YOUTUBE_URL);
         const dados = await resposta.json();
 
-        let videosNovos = [];
-
-        if (dados.items && dados.items.length > 0) {
-            videosNovos = dados.items.map(item => {
-                const idVideo = item.snippet?.resourceId?.videoId || "";
-                
-                let dataFormatada = "20260101"; 
-                if (item.snippet && item.snippet.publishedAt) {
-                    dataFormatada = item.snippet.publishedAt.substring(0, 10).replace(/-/g, '');
-                }
-                
-                const tagAssociada = DICIONARIO_TAGS[idVideo] || "";
-
-                return {
-                    id: idVideo,
-                    titulo: item.snippet?.title || "Vídeo sem Título",
-                    data: String(dataFormatada),
-                    tags: tagAssociada 
-                };
-            });
+        if (!dados.items) {
+            return res.status(200).json([]);
         }
 
-        // JUNÇÃO: Combinamos os vídeos novos em tempo real com o histórico antigo
-        const todosOsVideos = [...videosNovos, ...HISTORICO_VIDEOS];
-
-        // Remove duplicados por ID caso o histórico tenha algum vídeo recente repetido
-        const listaFinal = todosOsVideos.filter((v, index, self) =>
-            index === self.findIndex((t) => t.id === v.id)
-        );
+        const videosFormatados = dados.items.map(item => {
+            const idVideo = item.snippet?.resourceId?.videoId || "";
+            
+            let dataTexto = "20260101";
+            if (item.snippet && item.snippet.publishedAt) {
+                dataTexto = item.snippet.publishedAt.substring(0, 10).replace(/-/g, '');
+            }
+            
+            return {
+                id: idVideo,
+                titulo: item.snippet?.title || "Sem Título",
+                data: String(dataTexto),
+                tags: DICIONARIO_TAGS[idVideo] || ""
+            };
+        });
 
         res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate');
-        return res.status(200).json(listaFinal);
+        return res.status(200).json(videosFormatados);
 
     } catch (erro) {
-        return res.status(500).json({ erro: 'Falha na comunicação com o YouTube' });
+        return res.status(200).json([]);
     }
 }

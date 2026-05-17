@@ -21,16 +21,14 @@ async function inicializarSite() {
     try {
         atualizarLoader(5); 
         
-        // Chamando a nova API segura na Vercel
         const resposta = await fetch('/api/videos');
         atualizarLoader(30); 
         
         const dadosBrutos = await resposta.json();
         
-        // Proteção: Garante que os dados são um array e limpa registros corrompidos antes de ordenar
         if (Array.isArray(dadosBrutos)) {
             todosOsVideosGlobal = dadosBrutos
-                .filter(v => v && typeof v.data === 'string')
+                .filter(v => v && typeof v.data === 'string' && v.data.length >= 8)
                 .sort((a, b) => b.data.localeCompare(a.data));
         } else {
             todosOsVideosGlobal = [];
@@ -48,7 +46,6 @@ async function inicializarSite() {
                 capsulaDoTempo();
             } else {
                 const ultimoTipo = localStorage.getItem("ultimoFiltroTipo") || "ano";
-                // Fallback padrão configurado para 2026 para os vídeos novos do YouTube aparecerem direto
                 const ultimoValor = localStorage.getItem("ultimoFiltroValor") || "2026";
                 const ultimoTitulo = localStorage.getItem("ultimoTituloFiltro") || ultimoValor;
 
@@ -73,8 +70,7 @@ async function inicializarSite() {
         }, 300);
 
     } catch (erro) {
-        console.error("Erro ao inicializar o catálogo:", erro);
-        // Proteção: Remove o loader se a API falhar para o site não travar na tela preta
+        console.error("Erro:", erro);
         const loader = document.getElementById("page-loader");
         if (loader) loader.style.display = "none";
     }
@@ -90,8 +86,14 @@ function gerarBotoesDeAno() {
     if (!dropdown) return;
     dropdown.innerHTML = "";
 
-    // Mapeia os anos dinamicamente com base nos vídeos recebidos
-    const anos = [...new Set(todosOsVideosGlobal.map(v => v.data.substring(0, 4)))].sort((a, b) => b - a);
+    const anos = [...new Set(todosOsVideosGlobal
+        .filter(v => v && v.data && v.data.length >= 4)
+        .map(v => v.data.substring(0, 4))
+    )].sort((a, b) => b - a);
+
+    if (anos.length === 0) {
+        anos.push("2026");
+    }
 
     anos.forEach(ano => {
         const li = document.createElement("li");
@@ -113,7 +115,7 @@ function gerarBotoesDeAno() {
 }
 
 function filtrarPorAno(ano) {
-    const filtrados = todosOsVideosGlobal.filter(v => v.data.substring(0, 4) === ano);
+    const filtrados = todosOsVideosGlobal.filter(v => v && v.data && v.data.substring(0, 4) === ano);
     carregarAno(filtrados, ano);
 }
 
@@ -184,6 +186,8 @@ function carregarAno(videos, titulo) {
     const vistos = JSON.parse(localStorage.getItem("videosVistos")) || [];
 
     videos.forEach(v => {
+        if (!v || !v.data || v.data.length < 8) return;
+
         const card = document.createElement("div");
         card.className = "video-card";
         if (vistos.includes(v.id)) card.classList.add("visto");
@@ -322,7 +326,7 @@ function capsulaDoTempo() {
 
     const hoje = new Date();
     const diaMes = String(hoje.getMonth() + 1).padStart(2, '0') + String(hoje.getDate()).padStart(2, '0');
-    const filtrados = todosOsVideosGlobal.filter(v => v.data.substring(4, 8) === diaMes);
+    const filtrados = todosOsVideosGlobal.filter(v => v && v.data && v.data.substring(4, 8) === diaMes);
     if (filtrados.length > 0) carregarAno(filtrados, "⏳ Cápsula do Tempo");
     else alert("Nenhum vídeo hoje!");
 }
