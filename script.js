@@ -48,8 +48,23 @@ async function inicializarSite() {
                 localStorage.removeItem("abrirCapsula");
                 capsulaDoTempo();
             } else {
-                const ultimoValor = localStorage.getItem("ultimoFiltroValor") || "2024";
-                filtrarPorAno(ultimoValor);
+                const ultimoTipo = localStorage.getItem("ultimoFiltroTipo") || "ano";
+                const ultimoValor = localStorage.getItem("ultimoFiltroValor") || "2026";
+                const ultimoTitulo = localStorage.getItem("ultimoTituloFiltro") || ultimoValor;
+
+                if (ultimoTipo === "quadro") {
+                    
+                    const termoQuadro = normalizarTexto(ultimoValor);
+                    const filtrados = todosOsVideosGlobal.filter(v => {
+                        const tituloBate = normalizarTexto(v.titulo).includes(termoQuadro);
+                        const tagBate = v.tags ? normalizarTexto(v.tags).includes(termoQuadro) : false;
+                        return tituloBate || tagBate;
+                    });
+                    carregarAno(filtrados, ultimoTitulo);
+                } else {
+                    
+                    filtrarPorAno(ultimoValor);
+                }
             }
         }
         const vistos = JSON.parse(localStorage.getItem("videosVistos")) || [];
@@ -309,7 +324,11 @@ function configurarBusca() {
         debounceTimer = setTimeout(() => {
             const termo = normalizarTexto(barraPesquisa.value.trim());
             if (termo.length > 0) {
-                const filtrados = todosOsVideosGlobal.filter(v => normalizarTexto(v.titulo).includes(termo));
+                const filtrados = todosOsVideosGlobal.filter(v => {
+                    const tituloBate = normalizarTexto(v.titulo).includes(termo);
+                    const tagBate = v.tags ? normalizarTexto(v.tags).includes(termo) : false;
+                    return tituloBate || tagBate;
+                });
                 carregarAno(filtrados, `Busca: ${barraPesquisa.value}`);
             } else {
                 filtrarPorAno(localStorage.getItem("ultimoFiltroValor") || "2024");
@@ -327,7 +346,14 @@ function configurarFiltrosDeQuadros() {
             localStorage.setItem("ultimoFiltroTipo", "quadro");
             localStorage.setItem("ultimoFiltroValor", quadro);
             localStorage.setItem("ultimoTituloFiltro", btn.innerText);
-            const filtrados = todosOsVideosGlobal.filter(v => normalizarTexto(v.titulo).includes(normalizarTexto(quadro)));
+            
+            const termoQuadro = normalizarTexto(quadro);
+            const filtrados = todosOsVideosGlobal.filter(v => {
+                const tituloBate = normalizarTexto(v.titulo).includes(termoQuadro);
+                const tagBate = v.tags ? normalizarTexto(v.tags).includes(termoQuadro) : false;
+                return tituloBate || tagBate;
+            });
+            
             carregarAno(filtrados, btn.innerText);
         };
     });
