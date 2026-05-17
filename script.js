@@ -217,7 +217,7 @@ function verificarConquistas(quantidade) {
         { min: 50, label: "🗝️ Explorador", desc: "Você já conhece os atalhos." },
         { min: 500, label: "🎫 Fã de Elite", desc: "Presença garantida nos quadros." },
         { min: 1000, label: "🏆 Maratonista", desc: "Respeito total pela história." },
-        { min: 1700, label: "👑 Mestre da Chave", desc: "Você viu praticamente tudo!" }
+        { min: 1700, label: "👑 Mestre da Chave", desc: "Voc viu praticamente tudo!" }
     ];
 
     let htmlMedalhas = "";
